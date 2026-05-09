@@ -25,7 +25,7 @@ function Login() {
 
     try {
       const baseURL =
-        process.env.REACT_APP_API_URL || "http://localhost:5000";
+        process.env.REACT_APP_API_URL || "https://jd-chats.onrender.com";
 
       const response = await axios.post(`${baseURL}/api/auth/login`, {
         email: email.trim().toLowerCase(),

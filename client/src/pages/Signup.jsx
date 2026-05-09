@@ -31,7 +31,7 @@ function Signup() {
 
     try {
       const baseURL =
-        process.env.REACT_APP_API_URL || "http://localhost:5000";
+        process.env.REACT_APP_API_URL || "https://jd-chats.onrender.com";
 
       await axios.post(`${baseURL}/api/auth/signup`, {
         name: name.trim(),
