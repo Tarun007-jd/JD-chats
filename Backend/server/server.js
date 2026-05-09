@@ -12,11 +12,10 @@ const chatSocket = require("./sockets/chatSocket");
 const app = express();
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-// Allow both localhost (dev) and the deployed frontend URL (production)
+// Allow the deployed frontend URL (production)
 const allowedOrigins = [
-  "http://localhost:3000",
-  process.env.CLIENT_URL, // your deployed frontend URL e.g. https://jd-chats.vercel.app
-].filter(Boolean); // remove undefined if CLIENT_URL not set
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
 app.use(
   cors({
