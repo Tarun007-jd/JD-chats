@@ -4,17 +4,13 @@ import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  // Initialize user from localStorage on first load
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem("user");
       if (stored) return JSON.parse(stored);
-
-      // fallback: try to parse from token
       const token = localStorage.getItem("token");
       if (token) {
         const decoded = jwtDecode(token);
-        // Check token hasn't expired
         if (decoded.exp * 1000 > Date.now()) {
           return { id: decoded.id, name: decoded.name || "User" };
         }
@@ -31,6 +27,11 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   }, []);
 
+  const updateUser = useCallback((userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -40,13 +41,12 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = Boolean(user && localStorage.getItem("token"));
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook for easy access
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be used inside <AuthProvider>");

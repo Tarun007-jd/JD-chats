@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://jd-chats.onrender.com",
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000",
 });
 
-// Attach JWT token to every request automatically
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -16,7 +15,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Global response error handler — redirect to login on 401
 api.interceptors.response.use(
   (response) => response,
   (error) => {
