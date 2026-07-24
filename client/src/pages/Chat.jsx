@@ -29,7 +29,7 @@ const AVATAR_COLORS = [
 
 function Chat() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const { toggleTheme, theme } = useTheme();
 
   const [conversations, setConversations] = useState([]);
